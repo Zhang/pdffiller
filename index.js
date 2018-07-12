@@ -103,15 +103,12 @@
         },
 
         fillFormWithOptions: function( sourceFile, destinationFile, fieldValues, shouldFlatten, tempFDFPath, callback ) {
-
-
             //Generate the data from the field values.
             var randomSequence = Math.random().toString(36).substring(7);
             var currentTime = new Date().getTime();
-            var tempFDFFile =  "temp_data" + currentTime + randomSequence + ".fdf",
-                tempFDF = (typeof tempFDFPath !== "undefined"? tempFDFPath + '/' + tempFDFFile: tempFDFFile),
-
-                formData = fdf.generator( fieldValues, tempFDF );
+            var tempFDFFile =  "temp_data" + currentTime + randomSequence + ".fdf";
+            var tempFDF = (typeof tempFDFPath !== "undefined"? tempFDFPath + '/' + tempFDFFile: tempFDFFile);
+            var formData = fdf.generator( fieldValues, tempFDF );
 
             var args = [sourceFile, "fill_form", tempFDF, "output", destinationFile];
             if (shouldFlatten) {
@@ -140,6 +137,7 @@
         },
 
         fillForm: function( sourceFile, destinationFile, fieldValues, callback) {
+            console.log(fieldValues);
             this.fillFormWithFlatten( sourceFile, destinationFile, fieldValues, true, callback);
         }
 
