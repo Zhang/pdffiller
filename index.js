@@ -108,14 +108,14 @@
             var currentTime = new Date().getTime();
             var tempFDFFile =  "temp_data" + currentTime + randomSequence + ".fdf";
             var tempFDF = (typeof tempFDFPath !== "undefined"? tempFDFPath + '/' + tempFDFFile: tempFDFFile);
-            var formData = fdf.generator( fieldValues, tempFDF );
+            var formData = fdf.generator(_.pickBy(fieldValues), tempFDF);
 
             var args = [sourceFile, "fill_form", tempFDF, "output", destinationFile];
             if (shouldFlatten) {
                 args.push("flatten");
             }
-            execFile( "pdftk", args, function (error, stdout, stderr) {
 
+            execFile( "pdftk", args, function (error, stdout, stderr) {
                 if ( error ) {
                     console.log('exec error: ' + error);
                     return callback(error);
@@ -137,7 +137,6 @@
         },
 
         fillForm: function( sourceFile, destinationFile, fieldValues, callback) {
-            console.log(fieldValues);
             this.fillFormWithFlatten( sourceFile, destinationFile, fieldValues, true, callback);
         }
 
